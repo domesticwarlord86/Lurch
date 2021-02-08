@@ -7,13 +7,15 @@ using ff14bot;
 using ff14bot.AClasses;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using Clio.Utilities;
 
 namespace TheGardener
 {
     public class TheGardener : BotPlugin
     {
         public static string _name = "TheGardener";
-        private static Func<uint, Task> _activate;
+        //private static Func<uint, Task> _activate; Before adding gardenLoc
+		private static Func<uint, Vector3, Task> _activate;
         private static readonly string HookName = _name;
         private static Action<string, Func<Task>> _addHook;
         private static Action<string> _removeHook;
@@ -119,7 +121,8 @@ namespace TheGardener
             {
                 Log($"Past reset time of {Settings.ResetTime}");
                 Log($"Calling GoGarden");
-                await _activate((uint) Settings.Aetheryte);
+				await _activate((uint) Settings.Aetheryte, Settings.GardenLocation);
+                //await _activate((uint) Settings.Aetheryte); before adding gardenLoc
                 Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
             }
         }
@@ -138,7 +141,8 @@ namespace TheGardener
             {
                 var helper = q.First();
                 var fcAction = helper.GetMethod("GoGarden");
-                _activate = (Func<uint, Task>) fcAction?.CreateDelegate(typeof(Func<uint, Task>));
+				_activate = (Func<uint, Vector3, Task>) fcAction?.CreateDelegate(typeof(Func<uint, Vector3, Task>));
+                //_activate = (Func<uint, Task>) fcAction?.CreateDelegate(typeof(Func<uint, Task>)); Before adding gardenLoc setting.
                 Log($"Found {helper.GetMethod("GoGarden")?.Name}");
             }
 

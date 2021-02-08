@@ -60,7 +60,7 @@ namespace TheGardener
             }
         }
 
-        [Browsable(false)]
+        [Browsable(true)]
         public DateTime ResetTime
         {
             get => _resetTime;
