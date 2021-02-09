@@ -117,13 +117,20 @@ namespace TheGardener
 
         public static async Task GardenTask()
         {
-            if ((DateTime.Now - Settings.ResetTime).TotalHours > 1)
+            Log($"Last Run Time: {Settings.LastChecked}, Reset Time: {Settings.ResetTime}, Current Time: {DateTime.Now}");
+            Log($"Time Difference: {DateTime.Now - Settings.LastChecked} ");
+            if ((DateTime.Now - Settings.LastChecked).TotalHours > 1)
             {
                 Log($"Past reset time of {Settings.ResetTime}");
                 Log($"Calling GoGarden");
 				await _activate((uint) Settings.Aetheryte, Settings.GardenLocation);
                 //await _activate((uint) Settings.Aetheryte); before adding gardenLoc
+                Settings.LastChecked = DateTime.Now;
                 Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+            }
+            else
+            {
+                Log($"Not past Reset time of {Settings.ResetTime}, will check again later.");
             }
         }
 

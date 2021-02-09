@@ -60,6 +60,7 @@ namespace TheGardener
             }
         }
 
+
         [Browsable(true)]
         public DateTime ResetTime
         {
@@ -74,7 +75,7 @@ namespace TheGardener
             }
         }
         
-        [Browsable(false)]
+        [Browsable(true)]
         public DateTime LastChecked
         {
             get => _lastChecked;
