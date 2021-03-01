@@ -15,7 +15,7 @@ namespace TheGardener
     {
         public static string _name = "TheGardener";
         //private static Func<uint, Task> _activate; Before adding gardenLoc
-		private static Func<uint, Vector3, Task> _activate;
+		private static Func<uint, Vector3, Dictionary<uint, uint>, Task> _activate;
         private static readonly string HookName = _name;
         private static Action<string, Func<Task>> _addHook;
         private static Action<string> _removeHook;
@@ -24,11 +24,12 @@ namespace TheGardener
         private static Action<string> _removeHook1;
         private static bool FoundLisbeth = false;
         private static bool FoundLL = false;
+        private static Dictionary<uint, uint> plantPlan;
         private GardenerSettingsForm _form;
         public override string Author => "Domestic";
-        public override Version Version => new Version(0, 0, 1);
+        public override Version Version => new Version(0, 2, 1);
         public override string Name => "Gardener Settings";
-        public override string ButtonText => "Gardener Settings";
+        public override string ButtonText => "Settings";
         public override bool WantButton => true;
 
         public static GardenerSettings Settings => GardenerSettings.Instance;
@@ -48,7 +49,7 @@ namespace TheGardener
             {
                 _form.Show();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // ignored
             }
@@ -119,19 +120,43 @@ namespace TheGardener
         {
             Log($"Last Run Time: {Settings.LastChecked}, Reset Time: {Settings.ResetTime}, Current Time: {DateTime.Now}");
             Log($"Time Difference: {DateTime.Now - Settings.LastChecked} ");
+            plantPlan.Clear();
             if ((DateTime.Now - Settings.LastChecked).TotalHours > 1)
             {
                 Log($"Past reset time of {Settings.ResetTime}");
                 Log($"Calling GoGarden");
-				await _activate((uint) Settings.Aetheryte, Settings.GardenLocation);
-                //await _activate((uint) Settings.Aetheryte); before adding gardenLoc
-                Settings.LastChecked = DateTime.Now;
-                Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                if (Settings.GardenLocation != default(Vector3))
+                {
+                    if (Settings.ShouldPlant)
+                    {
+                        GeneratePlantPlan();
+                    }
+                    await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
+                    Settings.LastChecked = DateTime.Now;
+                    Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                }
+                else
+                {
+                    Log("No Garden Location Set. Exiting Task.");
+                }
             }
             else
             {
                 Log($"Not past Reset time of {Settings.ResetTime}, will check again later.");
             }
+        }
+
+        private static void GeneratePlantPlan()
+        {
+            // bed, seed, soil... bed can be the index into the dict
+            plantPlan.Add(Settings.Seed0, Settings.Soil0);
+            plantPlan.Add(Settings.Seed1, Settings.Soil1);
+            plantPlan.Add(Settings.Seed2, Settings.Soil2);
+            plantPlan.Add(Settings.Seed3, Settings.Soil3);
+            plantPlan.Add(Settings.Seed4, Settings.Soil4);
+            plantPlan.Add(Settings.Seed5, Settings.Soil5);
+            plantPlan.Add(Settings.Seed6, Settings.Soil6);
+            plantPlan.Add(Settings.Seed7, Settings.Soil7);
         }
 
         private static void FindLL()
@@ -148,7 +173,7 @@ namespace TheGardener
             {
                 var helper = q.First();
                 var fcAction = helper.GetMethod("GoGarden");
-				_activate = (Func<uint, Vector3, Task>) fcAction?.CreateDelegate(typeof(Func<uint, Vector3, Task>));
+				_activate = (Func<uint, Vector3, Dictionary<uint, uint>, Task >) fcAction?.CreateDelegate(typeof(Func<uint, Vector3, Dictionary<uint, uint>, Task>));
                 //_activate = (Func<uint, Task>) fcAction?.CreateDelegate(typeof(Func<uint, Task>)); Before adding gardenLoc setting.
                 Log($"Found {helper.GetMethod("GoGarden")?.Name}");
             }
