@@ -76,22 +76,16 @@ namespace TheGardener
 
         private void OnBotStop(BotBase bot)
         {
-            if (bot.Name == "Lisbeth")
-            {
                 if (!FoundLisbeth) FindLisbeth();
                 if (FoundLisbeth && FoundLL)
                     RemoveHooks();
-            }
         }
 
         private void OnBotStart(BotBase bot)
         {
-            if (bot.Name == "Lisbeth")
-            {
                 if (!FoundLisbeth) FindLisbeth();
                 if (FoundLisbeth && FoundLL)
                     AddHooks();
-            }
         }
 
         private void AddHooks()
