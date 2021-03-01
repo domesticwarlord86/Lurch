@@ -24,7 +24,7 @@ namespace TheGardener
         private static Action<string> _removeHook1;
         private static bool FoundLisbeth = false;
         private static bool FoundLL = false;
-        private static Dictionary<uint, uint> plantPlan;
+        private static Dictionary<uint, uint> plantPlan = new Dictionary<uint, uint>();
         private GardenerSettingsForm _form;
         public override string Author => "Domestic";
         public override Version Version => new Version(0, 2, 1);
@@ -119,7 +119,7 @@ namespace TheGardener
             {
                 Log($"Past reset time of {Settings.ResetTime}");
                 Log($"Calling GoGarden");
-                if (Settings.GardenLocation != default(Vector3))
+                if (Settings.GardenLocation != default(Vector3) && Settings.Aetheryte != GardenerSettings.HouseAetheryte.Not_Selected)
                 {
                     if (Settings.ShouldPlant)
                     {
@@ -131,7 +131,7 @@ namespace TheGardener
                 }
                 else
                 {
-                    Log("No Garden Location Set. Exiting Task.");
+                    Log("No Garden Location or Aetheryte Set. Please check settings... Exiting task.");
                 }
             }
             else

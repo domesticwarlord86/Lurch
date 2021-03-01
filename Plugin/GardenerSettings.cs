@@ -27,6 +27,7 @@ namespace TheGardener
         private HouseAetheryte _houseaetheryte;
         public enum HouseAetheryte
         {
+            Not_Selected = -1,
             Mist_Free_Company = 56,
             Lavender_Beds_Free_Company = 57,
             The_Goblet_Free_Company = 58,
@@ -40,7 +41,7 @@ namespace TheGardener
         public GardenerSettings() : base(Path.Combine(CharacterSettingsDirectory, "GardenerSettings.json")) {
 
         }
-
+        [DefaultValue(HouseAetheryte.Not_Selected)]
         public HouseAetheryte Aetheryte
         {
             get => _houseaetheryte;
