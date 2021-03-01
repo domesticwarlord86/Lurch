@@ -15,7 +15,7 @@ namespace TheGardener
     {
         public static string _name = "TheGardener";
         //private static Func<uint, Task> _activate; Before adding gardenLoc
-		private static Func<uint, Vector3, Dictionary<uint, uint>, Task> _activate;
+		private static Func<uint, Vector3, List<Tuple<uint, uint>>, Task> _activate;
         private static readonly string HookName = _name;
         private static Action<string, Func<Task>> _addHook;
         private static Action<string> _removeHook;
@@ -24,7 +24,7 @@ namespace TheGardener
         private static Action<string> _removeHook1;
         private static bool FoundLisbeth = false;
         private static bool FoundLL = false;
-        private static Dictionary<uint, uint> plantPlan = new Dictionary<uint, uint>();
+        private static List<Tuple<uint, uint>> plantPlan = new List<Tuple<uint, uint>>();
         private GardenerSettingsForm _form;
         public override string Author => "Domestic";
         public override Version Version => new Version(0, 2, 1);
@@ -142,15 +142,16 @@ namespace TheGardener
 
         private static void GeneratePlantPlan()
         {
-            // bed, seed, soil... bed can be the index into the dict
-            plantPlan.Add(Settings.Seed0, Settings.Soil0);
-            plantPlan.Add(Settings.Seed1, Settings.Soil1);
-            plantPlan.Add(Settings.Seed2, Settings.Soil2);
-            plantPlan.Add(Settings.Seed3, Settings.Soil3);
-            plantPlan.Add(Settings.Seed4, Settings.Soil4);
-            plantPlan.Add(Settings.Seed5, Settings.Soil5);
-            plantPlan.Add(Settings.Seed6, Settings.Soil6);
-            plantPlan.Add(Settings.Seed7, Settings.Soil7);
+            // bed, seed, soil... bed can be the index into the list
+            plantPlan.Clear();
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed0, Settings.Soil0));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed1, Settings.Soil1));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed2, Settings.Soil2));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed3, Settings.Soil3));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed4, Settings.Soil4));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed5, Settings.Soil5));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed6, Settings.Soil6));
+            plantPlan.Add(new Tuple<uint, uint>(Settings.Seed7, Settings.Soil7));
         }
 
         private static void FindLL()
@@ -167,7 +168,7 @@ namespace TheGardener
             {
                 var helper = q.First();
                 var fcAction = helper.GetMethod("GoGarden");
-				_activate = (Func<uint, Vector3, Dictionary<uint, uint>, Task >) fcAction?.CreateDelegate(typeof(Func<uint, Vector3, Dictionary<uint, uint>, Task>));
+				_activate = (Func<uint, Vector3, List<Tuple<uint, uint>>, Task >) fcAction?.CreateDelegate(typeof(Func<uint, Vector3, List<Tuple<uint, uint>>, Task>));
                 //_activate = (Func<uint, Task>) fcAction?.CreateDelegate(typeof(Func<uint, Task>)); Before adding gardenLoc setting.
                 Log($"Found {helper.GetMethod("GoGarden")?.Name}");
             }
