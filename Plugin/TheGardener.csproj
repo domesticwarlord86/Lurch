@@ -35,8 +35,8 @@
       <HintPath>..\..\..\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="rebornbuddy">
-      <HintPath>..\..\..\rebornbuddy.exe</HintPath>
+    <Reference Include="RebornBuddy, Version=1.0.410.0, Culture=neutral, PublicKeyToken=48d7174f8a943034">
+      <HintPath>..\..\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
