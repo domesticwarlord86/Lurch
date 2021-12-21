@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TheGardener</RootNamespace>
     <AssemblyName>TheGardener</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -31,11 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreyMagic">
-      <HintPath>..\..\..\GreyMagic.dll</HintPath>
+    <Reference Include="GreyMagic, Version=1.0.60.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a">
+      <HintPath>..\..\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy, Version=1.0.410.0, Culture=neutral, PublicKeyToken=48d7174f8a943034">
+    <Reference Include="RebornBuddy, Version=1.0.465.0, Culture=neutral, PublicKeyToken=48d7174f8a943034">
       <HintPath>..\..\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -63,7 +63,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TheGardener.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GardenerSettingsForm.resx">
@@ -73,6 +72,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Quest Behaviors\__LlamaLibrary\LlamaLibrary.csproj">
+      <Project>{196ee308-0205-4cc4-b449-51064f7e9960}</Project>
+      <Name>LlamaLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
