@@ -213,6 +213,15 @@ namespace TheGardener
             propertyGrid1.SelectedObject = TheGardener.Settings;
             propertyGrid1.Update();
         }
+        
+
+        
+        private void BtnSetLocation3_Click(object sender, EventArgs e)
+        {
+            GardenerSettings.Instance.GardenLocation3 = Core.Me.Location;
+            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.Update();
+        }
 
         private void comboSeed0_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -292,6 +301,22 @@ namespace TheGardener
         private void comboSoil7_SelectedIndexChanged(object sender, EventArgs e)
         {
             GardenerSettings.Instance.Soil7 = (uint) comboSoil7.SelectedValue;
+        }
+
+
+
+        private void BtnSetLocation3_Click_1(object sender, EventArgs e)
+        {
+            GardenerSettings.Instance.GardenLocation3 = Core.Me.Location;
+            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.Update();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GardenerSettings.Instance.GardenLocation2 = Core.Me.Location;
+            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.Update();
         }
     }
 }

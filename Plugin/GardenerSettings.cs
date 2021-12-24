@@ -15,6 +15,10 @@ namespace TheGardener
         private static GardenerSettings _settings;
         public static GardenerSettings Instance => _settings ?? (_settings = new GardenerSettings());
         
+        public GardenerSettings() : base(Path.Combine(CharacterSettingsDirectory, "GardenerSettings.json")) {
+
+        }   
+        
         private DateTime _resetTime = new DateTime(1970, 1, 1);
         private DateTime _lastChecked = new DateTime(1970, 1, 1);
         private bool _shouldPlant = false;
@@ -23,8 +27,12 @@ namespace TheGardener
         private uint _soil0, _soil1, _soil2, _soil3, _soil4, _soil5, _soil6, _soil7;
 
         private Vector3 _gardenLocation;
+        private Vector3 _gardenLocation2;
+        private Vector3 _gardenLocation3;
 
         private HouseAetheryte _houseaetheryte;
+        private HouseAetheryte2 _houseaetheryte2;
+        private HouseAetheryte3 _houseaetheryte3;
         public enum HouseAetheryte
         {
             Not_Selected = -1,
@@ -37,10 +45,34 @@ namespace TheGardener
             The_Goblet_Private = 61,
             Shirogane_Private = 97,
         }
-
-        public GardenerSettings() : base(Path.Combine(CharacterSettingsDirectory, "GardenerSettings.json")) {
-
+        
+        public enum HouseAetheryte2
+        {
+            Not_Selected = -1,
+            Mist_Free_Company = 56,
+            Lavender_Beds_Free_Company = 57,
+            The_Goblet_Free_Company = 58,
+            Shirogane_Free_Company = 96,
+            Mist_Private = 59,
+            Lavender_Beds_Private = 60,
+            The_Goblet_Private = 61,
+            Shirogane_Private = 97,
+        } 
+        
+        public enum HouseAetheryte3
+        {
+            Not_Selected = -1,
+            Mist_Free_Company = 56,
+            Lavender_Beds_Free_Company = 57,
+            The_Goblet_Free_Company = 58,
+            Shirogane_Free_Company = 96,
+            Mist_Private = 59,
+            Lavender_Beds_Private = 60,
+            The_Goblet_Private = 61,
+            Shirogane_Private = 97,
         }
+
+
         [DefaultValue(HouseAetheryte.Not_Selected)]
         public HouseAetheryte Aetheryte
         {
@@ -66,6 +98,63 @@ namespace TheGardener
                 }
             }
         }
+        
+        
+        [DefaultValue(HouseAetheryte2.Not_Selected)]
+        public HouseAetheryte2 Aetheryte2
+        {
+            get => _houseaetheryte2;
+            set
+            {
+                if (_houseaetheryte2 != value)
+                {
+                    _houseaetheryte2 = value;
+                    Save();
+                }
+            }
+        }
+        public Vector3 GardenLocation2
+        {
+            get => _gardenLocation2;
+            set
+            {
+                if (_gardenLocation2 != value)
+                {
+                    _gardenLocation2 = value;
+                    Save();
+                }
+            }
+        }        
+        
+        
+        [DefaultValue(HouseAetheryte3.Not_Selected)]
+        public HouseAetheryte3 Aetheryte3
+        {
+            get => _houseaetheryte3;
+            set
+            {
+                if (_houseaetheryte3 != value)
+                {
+                    _houseaetheryte3 = value;
+                    Save();
+                }
+            }
+        }
+        public Vector3 GardenLocation3
+        {
+            get => _gardenLocation3;
+            set
+            {
+                if (_gardenLocation3 != value)
+                {
+                    _gardenLocation3 = value;
+                    Save();
+                }
+            }
+        }         
+        
+        
+        
         [Browsable(true)]
         public DateTime ResetTime
         {

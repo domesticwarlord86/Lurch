@@ -30,6 +30,8 @@ namespace TheGardener
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GardenerSettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.BtnSetLocation3 = new System.Windows.Forms.Button();
+            this.BtnSetLocation2 = new System.Windows.Forms.Button();
             this.BtnSetLocation = new System.Windows.Forms.Button();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -96,29 +98,50 @@ namespace TheGardener
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(643, 358);
+            this.tabControl1.Size = new System.Drawing.Size(643, 381);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.BtnSetLocation3);
+            this.tabPage1.Controls.Add(this.BtnSetLocation2);
             this.tabPage1.Controls.Add(this.BtnSetLocation);
             this.tabPage1.Controls.Add(this.propertyGrid1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(635, 332);
+            this.tabPage1.Size = new System.Drawing.Size(635, 355);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // BtnSetLocation3
+            // 
+            this.BtnSetLocation3.Location = new System.Drawing.Point(429, 308);
+            this.BtnSetLocation3.Name = "BtnSetLocation3";
+            this.BtnSetLocation3.Size = new System.Drawing.Size(186, 28);
+            this.BtnSetLocation3.TabIndex = 4;
+            this.BtnSetLocation3.Text = "Set Garden3 Location";
+            this.BtnSetLocation3.UseVisualStyleBackColor = true;
+            this.BtnSetLocation3.Click += new System.EventHandler(this.BtnSetLocation3_Click_1);
+            // 
+            // BtnSetLocation2
+            // 
+            this.BtnSetLocation2.Location = new System.Drawing.Point(220, 308);
+            this.BtnSetLocation2.Name = "BtnSetLocation2";
+            this.BtnSetLocation2.Size = new System.Drawing.Size(186, 28);
+            this.BtnSetLocation2.TabIndex = 3;
+            this.BtnSetLocation2.Text = "Set Garden2 Location";
+            this.BtnSetLocation2.UseVisualStyleBackColor = true;
+            this.BtnSetLocation2.Click += new System.EventHandler(this.button1_Click);
+            // 
             // BtnSetLocation
             // 
-            this.BtnSetLocation.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BtnSetLocation.Location = new System.Drawing.Point(3, 305);
+            this.BtnSetLocation.Location = new System.Drawing.Point(8, 308);
             this.BtnSetLocation.Name = "BtnSetLocation";
-            this.BtnSetLocation.Size = new System.Drawing.Size(629, 24);
+            this.BtnSetLocation.Size = new System.Drawing.Size(186, 28);
             this.BtnSetLocation.TabIndex = 2;
-            this.BtnSetLocation.Text = "Set Garden Location";
+            this.BtnSetLocation.Text = "Set Garden1 Location";
             this.BtnSetLocation.UseVisualStyleBackColor = true;
             this.BtnSetLocation.Click += new System.EventHandler(this.BtnSetLocation_Click);
             // 
@@ -136,7 +159,7 @@ namespace TheGardener
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(635, 332);
+            this.tabPage2.Size = new System.Drawing.Size(635, 355);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Gardens";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -162,7 +185,7 @@ namespace TheGardener
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(629, 326);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(629, 349);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBox8
@@ -174,7 +197,7 @@ namespace TheGardener
             this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox8.Location = new System.Drawing.Point(209, 215);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(200, 108);
+            this.groupBox8.Size = new System.Drawing.Size(200, 180);
             this.groupBox8.TabIndex = 12;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Bed 6";
@@ -228,7 +251,7 @@ namespace TheGardener
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox7.Location = new System.Drawing.Point(3, 215);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 108);
+            this.groupBox7.Size = new System.Drawing.Size(200, 180);
             this.groupBox7.TabIndex = 11;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Bed 7";
@@ -552,7 +575,7 @@ namespace TheGardener
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(415, 215);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(211, 108);
+            this.groupBox5.Size = new System.Drawing.Size(211, 180);
             this.groupBox5.TabIndex = 9;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Bed 5";
@@ -601,9 +624,9 @@ namespace TheGardener
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 358);
+            this.ClientSize = new System.Drawing.Size(643, 381);
             this.Controls.Add(this.tabControl1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "GardenerSettingsForm";
             this.Text = "GardenerSettings";
             this.Load += new System.EventHandler(this.GardenerSettings_Load);
@@ -628,8 +651,15 @@ namespace TheGardener
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
-
         }
+
+        private System.Windows.Forms.Button BtnSetLocation3;
+
+        private System.Windows.Forms.Button button1;
+
+        private System.Windows.Forms.Button BtnSetLocation2;
+
+        private System.Windows.Forms.Button BtnSet2Location;
 
         #endregion
 

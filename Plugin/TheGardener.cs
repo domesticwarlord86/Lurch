@@ -116,6 +116,8 @@ namespace TheGardener
             {
                 Log.Information($"Past reset time of {Settings.ResetTime}");
                 Log.Information($"Calling GoGarden");
+                
+                // Garden 1
                 if (Settings.GardenLocation != default(Vector3) && Settings.Aetheryte != GardenerSettings.HouseAetheryte.Not_Selected)
                 {
                    // if (Settings.ShouldPlant)
@@ -123,9 +125,40 @@ namespace TheGardener
                    //     GeneratePlantPlan();
                    // }
                    //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
-                   await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...                    Settings.LastChecked = DateTime.Now;
+                   Log.Information($"Go to Garden at Location 1: " +Settings.Aetheryte);
+                   await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
+                   Settings.LastChecked = DateTime.Now;
                    Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
                 }
+                
+                //Garden 2
+                if (Settings.GardenLocation2 != default(Vector3) && Settings.Aetheryte2 != GardenerSettings.HouseAetheryte2.Not_Selected)
+                {
+                    // if (Settings.ShouldPlant)
+                    // {
+                    //     GeneratePlantPlan();
+                    // }
+                    //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
+                    Log.Information($"Go to Garden at Location 2: " +Settings.Aetheryte2);
+                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte2, Settings.GardenLocation2, plantPlan); // need to change this to accept a dict...
+                    Settings.LastChecked = DateTime.Now;
+                    Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                }
+                
+                //Garden 3
+                if (Settings.GardenLocation3 != default(Vector3) && Settings.Aetheryte3 != GardenerSettings.HouseAetheryte3.Not_Selected)
+                {
+                    // if (Settings.ShouldPlant)
+                    // {
+                    //     GeneratePlantPlan();
+                    // }
+                    //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
+                    Log.Information($"Go to Garden at Location 3: " +Settings.Aetheryte3);
+                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte3, Settings.GardenLocation3, plantPlan); // need to change this to accept a dict...
+                    Settings.LastChecked = DateTime.Now;
+                    Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                }                
+                
                 else
                 {
                     Log.Information("No Garden Location or Aetheryte Set. Please check settings... Exiting task.");
