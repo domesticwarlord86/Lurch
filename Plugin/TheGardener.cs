@@ -19,10 +19,11 @@ namespace TheGardener
         
         private static readonly string NameValue = "Lurch";
 
-        private static readonly LLogger LogLurch = new LLogger(NameValue, Colors.DarkRed);
+        private static readonly LLogger LogLurch = new LLogger(NameValue, Colors.SaddleBrown);
         private static readonly LLogger LogGarden = new LLogger(NameValue, Colors.LawnGreen);
         private static readonly LLogger LogChocobo = new LLogger(NameValue, Colors.Yellow);
-        private static readonly string HookName = "TheGardener";
+        private static readonly string HookName = "Lurch";
+        private static readonly string HookName1 = "TheGardener";
         private static readonly string HookName2 = "ChocoboTrainer";
 
         //private static Func<uint, Task> _activate; Before adding gardenLoc
@@ -92,9 +93,9 @@ namespace TheGardener
         {
             var hooks = LlamaLibrary.Helpers.Lisbeth.GetHookList();
             LogLurch.Information($"Adding {HookName} Hook");
-            if (!hooks.Contains(HookName))
+            if (!hooks.Contains(HookName1))
             {
-                LlamaLibrary.Helpers.Lisbeth.AddHook(HookName, GardenTask);
+                LlamaLibrary.Helpers.Lisbeth.AddHook(HookName1, GardenTask);
             }
             if (!hooks.Contains(HookName2))
             {
@@ -188,8 +189,8 @@ namespace TheGardener
                 {
                     LogChocobo.Information($"Go to stable at Location: " +ChocoboSettings.StableAetheryte );
                     await LlamaLibrary.Helpers.ChocoboHelper.GoGoChocobo((uint)ChocoboSettings.StableAetheryte, (Vector3) ChocoboSettings.StableLocation, (bool) ChocoboSettings.CleanBefore, (uint) ChocoboSettings.ChocoboFood, (bool) ChocoboSettings.FetchAfter, (bool) ChocoboSettings.ThavnairianOnion);
-                    GardenSettings.LastChecked = DateTime.Now;
-                    GardenSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                    ChocoboSettings.LastChecked = DateTime.Now;
+                    ChocoboSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
                 }
                 else
                 {
