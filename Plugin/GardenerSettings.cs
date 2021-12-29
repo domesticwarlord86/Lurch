@@ -12,8 +12,8 @@ namespace TheGardener
 {
     public class GardenerSettings : JsonSettings
     {
-        private static GardenerSettings _settings;
-        public static GardenerSettings Instance => _settings ?? (_settings = new GardenerSettings());
+        private static GardenerSettings _GardenerSettingssettings;
+        public static GardenerSettings Instance => _GardenerSettingssettings ?? (_GardenerSettingssettings = new GardenerSettings());
         
         public GardenerSettings() : base(Path.Combine(CharacterSettingsDirectory, "GardenerSettings.json")) {
 
@@ -181,6 +181,8 @@ namespace TheGardener
                 }
             }
         }
+
+        /*
         public bool ShouldPlant
         {
             get => _shouldPlant;
@@ -373,5 +375,6 @@ namespace TheGardener
                 }
             }
         }
+        */
     }
 }

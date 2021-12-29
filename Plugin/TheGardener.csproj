@@ -35,8 +35,8 @@
       <HintPath>..\..\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy, Version=1.0.465.0, Culture=neutral, PublicKeyToken=48d7174f8a943034">
-      <HintPath>..\..\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy, Version=1.0.467.0, Culture=neutral, PublicKeyToken=48d7174f8a943034">
+      <HintPath>..\..\..\Reborn - Magitech\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChocoboSettings.cs" />
     <Compile Include="GardenerSettings.cs" />
     <Compile Include="GardenerSettingsForm.cs">
       <SubType>Form</SubType>

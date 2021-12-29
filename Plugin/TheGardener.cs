@@ -15,25 +15,29 @@ namespace TheGardener
 {
     public class TheGardener : BotPlugin
     {
-        public static string _name = "TheGardener";
+        public static string _name = "Lurch";
         
-        private static readonly string NameValue = "TheGardener";
+        private static readonly string NameValue = "Lurch";
 
-        private static readonly LLogger Log = new LLogger(NameValue, Colors.LawnGreen);
+        private static readonly LLogger LogLurch = new LLogger(NameValue, Colors.DarkRed);
+        private static readonly LLogger LogGarden = new LLogger(NameValue, Colors.LawnGreen);
+        private static readonly LLogger LogChocobo = new LLogger(NameValue, Colors.Yellow);
         private static readonly string HookName = "TheGardener";
+        private static readonly string HookName2 = "ChocoboTrainer";
 
         //private static Func<uint, Task> _activate; Before adding gardenLoc
 		private static Func<uint, Vector3, Task> _activate;
 
         private static List<Tuple<uint, uint>> plantPlan = new List<Tuple<uint, uint>>();
         private GardenerSettingsForm _form;
-        public override string Author => "Domestic";
-        public override Version Version => new Version(0, 2, 1);
-        public override string Name => "Gardener Settings";
+        public override string Author => "DomesticWarlord";
+        public override Version Version => new Version(2, 0, 1);
+        public override string Name => "Lurch Settings";
         public override string ButtonText => "Settings";
         public override bool WantButton => true;
 
-        public static GardenerSettings Settings => GardenerSettings.Instance;
+        public static GardenerSettings GardenSettings => GardenerSettings.Instance;
+        public static ChocoboSettings ChocoboSettings => ChocoboSettings.Instance;
 
         public override void OnButtonPress()
         {
@@ -41,7 +45,7 @@ namespace TheGardener
             {
                 _form = new GardenerSettingsForm()
                 {
-                    Text = "Gardener Settings v" + Version,
+                    Text = "Lurch Settings v" + Version,
                 };
                 _form.Closed += (o, e) => { _form = null; };
             }
@@ -64,14 +68,14 @@ namespace TheGardener
         {
             TreeRoot.OnStart += OnBotStart;
             TreeRoot.OnStop += OnBotStop;
-            Log.Information($"{_name} Enabled");
+            LogLurch.Information($"{_name} Enabled");
         }
 
         public override void OnDisabled()
         {
             TreeRoot.OnStart -= OnBotStart;
             TreeRoot.OnStop -= OnBotStop;
-            Log.Information($"{_name} Disabled");
+            LogLurch.Information($"{_name} Disabled");
         }
 
         private void OnBotStop(BotBase bot)
@@ -86,20 +90,22 @@ namespace TheGardener
 
         private void AddHooks()
         {
-
             var hooks = LlamaLibrary.Helpers.Lisbeth.GetHookList();
-            Log.Information($"Adding {HookName} Hook");
+            LogLurch.Information($"Adding {HookName} Hook");
             if (!hooks.Contains(HookName))
             {
                 LlamaLibrary.Helpers.Lisbeth.AddHook(HookName, GardenTask);
             }
-     
+            if (!hooks.Contains(HookName2))
+            {
+                LlamaLibrary.Helpers.Lisbeth.AddHook(HookName2, ChocoboTask);
+            }
         }
 
         private void RemoveHooks()
         {
             var hooks = LlamaLibrary.Helpers.Lisbeth.GetHookList();
-            Log.Information($"Removing {HookName} Hook");
+            LogLurch.Information($"Removing {HookName} Hook");
             if (hooks.Contains(HookName))
             {
                 LlamaLibrary.Helpers.Lisbeth.RemoveHook(HookName);
@@ -109,64 +115,90 @@ namespace TheGardener
 
         public static async Task GardenTask()
         {
-            Log.Information($"Last Run Time: {Settings.LastChecked}, Reset Time: {Settings.ResetTime}, Current Time: {DateTime.Now}");
-            Log.Information($"Time Difference: {DateTime.Now - Settings.LastChecked} ");
+            LogLurch.Information($"Gardener Last Run Time: {GardenSettings.LastChecked}, Reset Time: {GardenSettings.ResetTime}, Current Time: {DateTime.Now}");
+            LogLurch.Information($"Time Difference: {DateTime.Now - GardenSettings.LastChecked} ");
             //plantPlan.Clear();
-            if ((DateTime.Now - Settings.LastChecked).TotalHours > 1)
+            if ((DateTime.Now - GardenSettings.LastChecked).TotalHours > 1)
             {
-                Log.Information($"Past reset time of {Settings.ResetTime}");
-                Log.Information($"Calling GoGarden");
+                LogLurch.Information($"Past reset time of {GardenSettings.ResetTime}");
+                LogLurch.Information($"Calling GoGarden");
                 
                 // Garden 1
-                if (Settings.GardenLocation != default(Vector3) && Settings.Aetheryte != GardenerSettings.HouseAetheryte.Not_Selected)
+                if (GardenSettings.GardenLocation != default(Vector3) && GardenSettings.Aetheryte != GardenerSettings.HouseAetheryte.Not_Selected)
                 {
                    // if (Settings.ShouldPlant)
                    // {
                    //     GeneratePlantPlan();
                    // }
                    //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
-                   Log.Information($"Go to Garden at Location 1: " +Settings.Aetheryte);
-                   await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
-                   Settings.LastChecked = DateTime.Now;
-                   Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                   LogGarden.Information($"Go to Garden at Location 1: " +GardenSettings.Aetheryte);
+                   await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)GardenSettings.Aetheryte, GardenSettings.GardenLocation, plantPlan); // need to change this to accept a dict...
+                   GardenSettings.LastChecked = DateTime.Now;
+                   GardenSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
                 }
                 
                 //Garden 2
-                if (Settings.GardenLocation2 != default(Vector3) && Settings.Aetheryte2 != GardenerSettings.HouseAetheryte2.Not_Selected)
+                if (GardenSettings.GardenLocation2 != default(Vector3) && GardenSettings.Aetheryte2 != GardenerSettings.HouseAetheryte2.Not_Selected)
                 {
                     // if (Settings.ShouldPlant)
                     // {
                     //     GeneratePlantPlan();
                     // }
                     //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
-                    Log.Information($"Go to Garden at Location 2: " +Settings.Aetheryte2);
-                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte2, Settings.GardenLocation2, plantPlan); // need to change this to accept a dict...
-                    Settings.LastChecked = DateTime.Now;
-                    Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                    LogGarden.Information($"Go to Garden at Location 2: " +GardenSettings.Aetheryte2);
+                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)GardenSettings.Aetheryte2, GardenSettings.GardenLocation2, plantPlan); // need to change this to accept a dict...
+                    GardenSettings.LastChecked = DateTime.Now;
+                    GardenSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
                 }
                 
                 //Garden 3
-                if (Settings.GardenLocation3 != default(Vector3) && Settings.Aetheryte3 != GardenerSettings.HouseAetheryte3.Not_Selected)
+                if (GardenSettings.GardenLocation3 != default(Vector3) && GardenSettings.Aetheryte3 != GardenerSettings.HouseAetheryte3.Not_Selected)
                 {
                     // if (Settings.ShouldPlant)
                     // {
                     //     GeneratePlantPlan();
                     // }
                     //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
-                    Log.Information($"Go to Garden at Location 3: " +Settings.Aetheryte3);
-                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)Settings.Aetheryte3, Settings.GardenLocation3, plantPlan); // need to change this to accept a dict...
-                    Settings.LastChecked = DateTime.Now;
-                    Settings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                    LogGarden.Information($"Go to Garden at Location 3: " +GardenSettings.Aetheryte3);
+                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)GardenSettings.Aetheryte3, GardenSettings.GardenLocation3, plantPlan); // need to change this to accept a dict...
+                    GardenSettings.LastChecked = DateTime.Now;
+                    GardenSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
                 }                
                 
                 else
                 {
-                    Log.Information("No Garden Location or Aetheryte Set. Please check settings... Exiting task.");
+                    LogLurch.Information("No Garden Location or Aetheryte Set. Please check settings... Exiting task.");
                 }
             }
             else
             {
-                Log.Information($"Not past Reset time of {Settings.ResetTime}, will check again later.");
+                LogLurch.Information($"Not past Reset time of {GardenSettings.ResetTime}, will check again later.");
+            }
+        }
+
+        public static async Task ChocoboTask()
+        {
+            LogLurch.Information($"Chocobo Trainer Last Run Time: {ChocoboSettings.LastChecked}, Reset Time: {ChocoboSettings.ResetTime}, Current Time: {DateTime.Now}");
+            LogLurch.Information($"Time Difference: {DateTime.Now - ChocoboSettings.LastChecked} ");
+            if ((DateTime.Now - ChocoboSettings.LastChecked).TotalHours > 1)
+            {
+                LogLurch.Information($"Past reset time of {GardenSettings.ResetTime}");
+                LogLurch.Information($"Calling GoGoChocobo"); 
+                if (ChocoboSettings.StableLocation != default(Vector3) && ChocoboSettings.StableAetheryte != ChocoboSettings.StableAE.Not_Selected)
+                {
+                    LogChocobo.Information($"Go to stable at Location: " +ChocoboSettings.StableAetheryte );
+                    await LlamaLibrary.Helpers.ChocoboHelper.GoGoChocobo((uint)ChocoboSettings.StableAetheryte, (Vector3) ChocoboSettings.StableLocation, (bool) ChocoboSettings.CleanBefore, (uint) ChocoboSettings.ChocoboFood, (bool) ChocoboSettings.FetchAfter, (bool) ChocoboSettings.ThavnairianOnion);
+                    GardenSettings.LastChecked = DateTime.Now;
+                    GardenSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
+                }
+                else
+                {
+                    LogLurch.Information("No stable Location or Aetheryte Set. Please check settings... Exiting task.");
+                }
+            }
+            else
+            {
+                LogLurch.Information($"Not past Reset time of {ChocoboSettings.ResetTime}, will check again later.");
             }
         }
 

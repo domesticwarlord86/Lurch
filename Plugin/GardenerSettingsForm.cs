@@ -131,14 +131,16 @@ namespace TheGardener
         public GardenerSettingsForm() 
         {
             InitializeComponent();
-            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.SelectedObject = TheGardener.GardenSettings;
             propertyGrid1.Update();
-            
+            propertyGrid2.SelectedObject = TheGardener.ChocoboSettings;
+            propertyGrid2.Update();            
             initialize_form();
         }
 
         private void initialize_form()
         {
+            /*
             // Set all Seed ComboBoxes to the SeedList
             for (int i = 0; i < 8; i++) {
                 var b = new BindingSource {DataSource = _seeds};
@@ -191,6 +193,7 @@ namespace TheGardener
 
             if (_seeds.ContainsKey(GardenerSettings.Instance.Seed7)) comboSeed7.SelectedValue = GardenerSettings.Instance.Seed7;
             if (_soils.ContainsKey(GardenerSettings.Instance.Soil7)) comboSoil7.SelectedValue = GardenerSettings.Instance.Soil7;
+            */       
         }
 
         private void SetDoubleBuffer(Control ctl, bool doublebuffered)
@@ -204,24 +207,31 @@ namespace TheGardener
 
         private void GardenerSettings_Load(object sender, EventArgs e)
         {
-            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.SelectedObject = TheGardener.GardenSettings;
         }
 
         private void BtnSetLocation_Click(object sender, EventArgs e)
         {
             GardenerSettings.Instance.GardenLocation = Core.Me.Location;
-            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.SelectedObject = TheGardener.GardenSettings;
             propertyGrid1.Update();
         }
         
-
-        
-        private void BtnSetLocation3_Click(object sender, EventArgs e)
+        private void BtnSetLocation3_Click_1(object sender, EventArgs e)
         {
             GardenerSettings.Instance.GardenLocation3 = Core.Me.Location;
-            propertyGrid1.SelectedObject = TheGardener.Settings;
+            propertyGrid1.SelectedObject = TheGardener.GardenSettings;
             propertyGrid1.Update();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GardenerSettings.Instance.GardenLocation2 = Core.Me.Location;
+            propertyGrid1.SelectedObject = TheGardener.GardenSettings;
+            propertyGrid1.Update();
+        }
+        
+        /*
 
         private void comboSeed0_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -303,20 +313,19 @@ namespace TheGardener
             GardenerSettings.Instance.Soil7 = (uint) comboSoil7.SelectedValue;
         }
 
+        */
 
 
-        private void BtnSetLocation3_Click_1(object sender, EventArgs e)
+        private void propertyGrid1_Click(object sender, EventArgs e)
         {
-            GardenerSettings.Instance.GardenLocation3 = Core.Me.Location;
-            propertyGrid1.SelectedObject = TheGardener.Settings;
-            propertyGrid1.Update();
+            propertyGrid2.SelectedObject = TheGardener.ChocoboSettings;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void StableLoc_Click(object sender, EventArgs e)
         {
-            GardenerSettings.Instance.GardenLocation2 = Core.Me.Location;
-            propertyGrid1.SelectedObject = TheGardener.Settings;
-            propertyGrid1.Update();
+            TheGardener.ChocoboSettings.StableLocation = Core.Me.Location;
+            propertyGrid2.SelectedObject = TheGardener.ChocoboSettings;
+            propertyGrid2.Update();
         }
     }
 }
